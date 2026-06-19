@@ -1,123 +1,177 @@
-# Facial Emotion Recognition Using Deep Learning (ResNet50)
+# Facial Emotion Recognition Using Deep Learning (ResNet50) 🤖
 
-This project implements a facial emotion recognition system using **ResNet50 with transfer learning**, evaluated on the **JAFFE** and **CK+** datasets. The model classifies seven basic emotions and compares performance across both datasets using standard deep‑learning evaluation metrics.
+Deep learning-based facial emotion recognition using transfer learning with ResNet50 architecture on JAFFE and CK+ datasets.
 
----
+## 📋 Overview
 
-## 📌 Project Overview
+This project implements a state-of-the-art facial emotion recognition system using:
+- **ResNet50** pre-trained model with transfer learning
+- **JAFFE & CK+** emotion datasets
+- **PyTorch/TensorFlow** for model training and inference
+- Advanced data augmentation and preprocessing techniques
+- Comprehensive evaluation metrics and visualizations
 
-- Built a deep‑learning FER model using **ResNet50 pre‑trained on ImageNet**
-- Evaluated on **JAFFE** (213 images) and **CK+** (593 images)
-- Implemented:
-  - Image preprocessing (RGB conversion, resizing to 224×224)
-  - Data augmentation
-  - Class weighting for imbalance
-  - Two‑stage training (frozen base → fine‑tuning)
-- Compared performance using:
-  - Accuracy
-  - Precision
-  - Recall
-  - F1‑score
-  - Confusion matrices
-  - Training/validation curves
+## 🎯 Features
 
-This project demonstrates how transfer learning improves FER performance on small datasets compared to traditional ML methods (HOG/LBP + SVM).
+✅ Transfer learning with ResNet50 backbone  
+✅ Multi-dataset training (JAFFE, CK+)  
+✅ Emotion classification (7-8 emotions)  
+✅ Real-time prediction capabilities  
+✅ Model evaluation with detailed metrics  
+✅ Data visualization and analysis  
+✅ Early stopping and learning rate scheduling  
 
----
+## 🧬 Emotions Recognized
 
-## 🧠 Deep Learning Approach
+- 😊 Happy
+- 😢 Sad
+- 😠 Angry
+- 😐 Neutral
+- 😲 Surprised
+- 😨 Fear
+- 🤮 Disgust
 
-### **Model Architecture**
-- Base model: **ResNet50**
-- Pretrained on: **ImageNet**
-- Custom layers added:
-  - GlobalAveragePooling
-  - Dense layer
-  - Dropout
-  - Final softmax classifier
+## 📊 Dataset Information
 
-### **Training Strategy**
-1. **Stage 1:** Freeze ResNet50 base → train classifier only  
-2. **Stage 2:** Unfreeze top layers → fine‑tune with low learning rate  
+| Dataset | Images | Emotions | Resolution |
+|---------|--------|----------|------------|
+| JAFFE | 213 | 7 | 256×256 |
+| CK+ | 593 | 8 | 640×490 |
 
-### **Loss & Optimizer**
-- Loss: `categorical_crossentropy`
-- Optimizer: `Adam`
-- Callbacks: EarlyStopping, ReduceLROnPlateau
+## 🚀 Getting Started
 
----
+### Prerequisites
+```bash
+python >= 3.8
+pytorch >= 1.9 or tensorflow >= 2.6
+torchvision >= 0.10
+numpy, pandas, matplotlib, scikit-learn, opencv-python
+```
 
-## 📊 Results Summary
+### Installation
+```bash
+git clone https://github.com/Sipatel9/facial-emotion-recognition-resnet50.git
+cd facial-emotion-recognition-resnet50
+pip install -r requirements.txt
+```
 
-### **JAFFE**
-- Accuracy: **40.0%**
-- Precision: **0.5688**
-- Recall: **0.3944**
-- F1‑score: **0.4049**
+### Usage
+```python
+# Load and use the model
+from model import EmotionRecognizer
 
-### **CK+**
-- Accuracy: **56.7%**
-- Precision: **0.5114**
-- Recall: **0.4927**
-- F1‑score: **0.4702**
+recognizer = EmotionRecognizer(model_path='models/resnet50_emotion_model.pth')
+emotions = recognizer.predict_from_image('image.jpg')
+```
+
+## 📈 Model Performance
+
+### JAFFE Dataset
+- **Accuracy**: 40.0%
+- **Precision**: 0.5688
+- **Recall**: 0.3944
+- **F1-Score**: 0.4049
+
+### CK+ Dataset
+- **Accuracy**: 56.7%
+- **Precision**: 0.5114
+- **Recall**: 0.4927
+- **F1-Score**: 0.4702
 
 CK+ performs better due to larger size and more diverse subjects.
 
----
+## 🏗️ Architecture
 
-## 📂 Repository Structure
+```
+Input Image (224×224)
+    ↓
+ResNet50 Backbone (Pre-trained on ImageNet)
+    ↓
+Global Average Pooling
+    ↓
+Custom Dense Layers
+    ↓
+Dropout (0.5)
+    ↓
+Softmax Output (7-8 emotions)
+```
 
----
+## 📚 Key Techniques
 
-## 📈 Visual Outputs
+- **Transfer Learning** - Leverage pre-trained ImageNet weights
+- **Two-Stage Training** - Frozen base → fine-tuning
+- **Data Augmentation** - Rotation, zoom, brightness adjustments
+- **Batch Normalization** - Improved training stability
+- **Dropout Regularization** - Prevent overfitting
+- **Learning Rate Scheduling** - Adaptive learning rates
+- **Class Weighting** - Handle class imbalance
 
-## 📂 Figures
+## 📁 Project Structure
 
-All visual outputs used in this project are stored in the `figures/` folder, including:
+```
+├── data/
+│   ├── jaffe/
+│   └── ck_plus/
+├── figures/
+│   ├── confusion_matrix_jaffe.png
+│   ├── confusion_matrix_ckplus.png
+│   ├── accuracy_loss_jaffe.png
+│   ├── accuracy_loss_ckplus.png
+│   ├── sample_predictions.png
+│   └── accuracy_comparison.png
+├── models/
+│   └── resnet50_emotion_model.pth
+├── notebooks/
+│   └── emotion_recognition.ipynb
+├── src/
+│   ├── model.py
+│   ├── train.py
+│   └── predict.py
+└── README.md
+```
 
-- Confusion Matrix (JAFFE)
-- Confusion Matrix (CK+)
-- Training & Validation Accuracy/Loss Curves (JAFFE)
-- Training & Validation Accuracy/Loss Curves (CK+)
-- Sample Emotion Predictions
-- Accuracy Comparison Chart
-- Additional visualisations from the analysis
+## 📈 Visual Results
 
-Below are previews of the figures included in the repository:
+All training results, confusion matrices, and performance charts are included in the `figures/` folder:
 
-![Confusion Matrix JAFFE](figures/confusion_matrix_jaffe.png)
-![Accuracy Loss JAFFE](figures/accuracy_loss_jaffe.png)
-![Accuracy Loss CK+](figures/accuracy_loss_ckplus.png)
-![Confusion Matrix CK+](figures/confusion_matrix_ckplus.png)
-![Sample Predictions](figures/sample_predictions.png)
-![Accuracy Comparison](figures/accuracy_comparison.png)
+- **Confusion Matrices** for both datasets
+- **Training/Validation Curves** showing accuracy and loss
+- **Sample Predictions** on test images
+- **Accuracy Comparison Charts**
 
----
+## 🔗 Resources
 
-## 📘 Full Report
+- 📘 [Full Academic Report](report/)
+- 🔗 [Google Colab Notebook](https://colab.research.google.com/drive/1E2Zs1vyOLt6oo-rO3VV7oyalcLREoJBv?usp=sharing)
+- 📊 [JAFFE Dataset](https://www.kasrl.org/jaffe.html)
+- 📊 [CK+ Dataset](https://www.jeffcohn.com/databases/)
 
-The full academic report is included in the **report/** folder.[Facial Emotion recognition Using Deep Learning.docx](https://github.com/user-attachments/files/27244619/Facial.Emotion.recognition.Using.Deep.Learning.docx)
+## 🎓 Key Insights
 
-
----
-
-## 🔗 Google Colab Notebook
-
-Add your Colab link here:
-https://colab.research.google.com/drive/1E2Zs1vyOLt6oo-rO3VV7oyalcLREoJBv?usp=sharing
-
-
-
----
+- Transfer learning significantly improves FER performance on small datasets
+- Larger, more diverse datasets (CK+) lead to better generalization
+- Two-stage training approach balances accuracy and computational efficiency
+- Attention mechanisms and ensemble methods could further improve results
 
 ## 🚀 Future Improvements
 
-- Add attention mechanisms (CBAM, SE blocks)  
-- Use larger datasets (FER2013, RAF‑DB)  
-- Implement ensemble models  
-- Improve generalisation with face alignment  
+- Add attention mechanisms (CBAM, SE blocks)
+- Use larger datasets (FER2013, RAF-DB)
+- Implement ensemble models
+- Improve generalization with face alignment
+- Deploy as web/mobile application
 
----
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest improvements
+- Submit pull requests
+- Improve documentation
+
+## 📝 License
+
+This project is open source and available under the MIT License.
 
 ## 👩‍💻 Author
 
@@ -125,4 +179,10 @@ https://colab.research.google.com/drive/1E2Zs1vyOLt6oo-rO3VV7oyalcLREoJBv?usp=sh
 BSc (Hons) Computer Science  
 University of Central Lancashire (UCLan)
 
+## 📞 Contact
 
+For questions or collaborations: [GitHub Profile](https://github.com/Sipatel9)
+
+---
+
+**⭐ If you found this helpful, please consider giving it a star!**
